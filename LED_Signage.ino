@@ -12,8 +12,10 @@ void setup() {
   pinMode(clk, OUTPUT);     
   pinMode(ser, OUTPUT);
 
+  // setup the row pins
   for (int row = 0; row < rowCount; row++)  {
     pinMode(rows[row], OUTPUT);
+    digitalWrite(rows[row], LOW);
   }
 
   // Shift 75 0s onto the register to clear it  
@@ -26,9 +28,20 @@ void setup() {
 void loop() {
 
   // Count to 256, but put a buffer of 4 bits in between
-  for (int bits = 0;  bits < 256;  bits++) {
+  for (int bits = 0;  bits < 1024;  bits++) {
     shiftOut(ser, clk, MSBFIRST, bits);
-    shiftOut(ser, clk, MSBFIRST, 0000);
-    delay(1000);
+    shiftOut(ser, clk, MSBFIRST, B0000);
+    pop();
+    delay(100);
+  }
+}
+
+void pop() {
+
+  if (count < 4) {
+    digitalWrite(rows[count-1], LOW);
+    digitalWrite(rows[count], HIGH);
+  } else {
+    count = 0;
   }
 }
