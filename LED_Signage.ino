@@ -27,10 +27,10 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
 
-  // Count to 256, but put a buffer of 4 bits in between
-  for (int bits = 0;  bits < 256;  bits++) {
+  // Count to some number, but put a buffer of blank bits in between
+  for (int bits = 0;  bits < 2048; bits++) {
     shiftOut(ser, clk, MSBFIRST, bits);
-    shiftOut(ser, clk, MSBFIRST, B0000);
+    shiftOut(ser, clk, MSBFIRST, B00000000);
 
     // show this on each row once before moving on
     for (int row = 0; row < rowCount; row++) {
@@ -39,6 +39,8 @@ void loop() {
       digitalWrite(rows[row], HIGH);
     }
 
+    digitalWrite(rows[0], LOW);
     delay(1000);
+    digitalWrite(rows[0], HIGH);
   }
 }
