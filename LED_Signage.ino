@@ -1,10 +1,10 @@
-int clk = 11;
-int ser = 12;
+int clk = 2;
+int ser = 3;
 byte count = 0;
 
 // Array of pins the rows coorespond to
-int rows[] = { 8, 9, 10, 13, 7, 6, 5 };
-int rowCount = 7;
+int rows[] = { 8, 9, 10, 11, 7, 6, 5 };
+int rowCount = 5;
 
 // the setup routine runs once when you press reset:
 void setup() {                
@@ -37,9 +37,9 @@ void loop() {
 
   // Iterate through the rows, turning one on at a time
   for (int row = 0; row < rowCount; row++) {
-    digitalWrite(rows[row], HIGH);
-    delay(100);
     digitalWrite(rows[row], LOW);
+    delay(100);
+    digitalWrite(rows[row], HIGH);
   }
 
   count++;
