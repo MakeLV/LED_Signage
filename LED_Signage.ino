@@ -1,9 +1,9 @@
-int clk = 11;
-int ser = 12;
+int clk = 2;
+int ser = 3;
 byte count = 0;
 
 // Array of pins the rows coorespond to
-int rows[] = { 8, 9, 10, 13, 7, 6, 5 };
+int rows[] = { 8, 9, 10, 11, 7, 6, 5 };
 int rowCount = 7;
 
 // the setup routine runs once when you press reset:
@@ -31,17 +31,13 @@ void loop() {
   for (int bits = 0;  bits < 1024;  bits++) {
     shiftOut(ser, clk, MSBFIRST, bits);
     shiftOut(ser, clk, MSBFIRST, B0000);
-    pop();
-    delay(100);
-  }
-}
-
-void pop() {
-
-  if (count < 4) {
-    digitalWrite(rows[count-1], LOW);
-    digitalWrite(rows[count], HIGH);
-  } else {
-    count = 0;
+    if (count < 5) {
+      digitalWrite(rows[count], LOW);
+      digitalWrite(rows[count-1], HIGH);
+      count++;
+    } else {
+      count = 0;
+    }
+    delay(1000);
   }
 }
