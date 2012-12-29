@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-int clk = 2;
-int ser = 3;
-byte count = 0;
-
-// Array of pins the rows coorespond to
-int rows[] = { 8, 9, 10, 11, 7, 6, 5 };
-int rowCount = 5;
-=======
 int clk = 2; // Clock
 int ser = 3; // Serial
 
 // Array of pins the rows coorespond to
 int rows[] = { 8, 9, 10, 11, 7, 6, 5 };
 int rowCount = 5; //Actually 7, but only 5 wired up atm
->>>>>>> ShiftOut
 
 // the setup routine runs once when you press reset:
 void setup() {                
@@ -49,16 +39,10 @@ void loop() {
       digitalWrite(rows[row], HIGH);
     }
 
-<<<<<<< HEAD
   // Iterate through the rows, turning one on at a time
   for (int row = 0; row < rowCount; row++) {
     digitalWrite(rows[row], LOW);
     delay(100);
     digitalWrite(rows[row], HIGH);
-=======
-    digitalWrite(rows[0], LOW);
-    delay(1000);
-    digitalWrite(rows[0], HIGH);
->>>>>>> ShiftOut
   }
 }
