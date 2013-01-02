@@ -1,18 +1,21 @@
 int clk = 2; // Clock
 int ser = 3; // Serial
  
+
+// Array of pins the rows coorespond to
+int rows[] = { 8, 9, 10, 11, 7, 6, 5 };
+int rowCount = 7; 
+int columnCount = 71;
+
 const char font[2][6] PROGMEM = //this font doesn't work because it is layered left-to-right instead of top to bottom
 {
  
 	{0x00,0x00,0x00,0x00,0x00,0x00},	// SPACE (33)
  
- 
 	{0x00,0x7E,0x11,0x11,0x11,0x7E},	// A
 };
 
-// Array of pins the rows coorespond to
-int rows[] = { 8, 9, 10, 11, 7, 6, 5 };
-int rowCount = 7; //Actually 7, but only 5 wired up atm
+char a[] = {0x1C,0x22,0x22,0x3E,0x22,0x22,0x00}; //letter layer from top to bottom
 
 // the setup routine runs once when you press reset:
 void setup() {                
@@ -26,7 +29,7 @@ void setup() {
     digitalWrite(rows[row], HIGH);
   }
 
-  clear_display();
+  clear_display(columnCount);
 
   Serial.begin(9600);
   Serial.println("Hello");
@@ -35,9 +38,8 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
 
-  int letter = 80;
-  print_letter(letter);
-  clear_display();
+  print_letter();
+  clear_display(75);
 
 }
 
@@ -60,30 +62,29 @@ void count_binary(int n)
 }
 
 // Print a letter onto the display
-void print_letter(char c)
+void print_letter() //(char c)
 {
   int i;
-  char e[] = {0x1C,0x22,0x22,0x3E,0x22,0x22}; //letter layer from top to bottom
 
   for (i=0; i<rowCount; i++)
   {
 //    write_data(pgm_read_byte(&font[(int)c][i]));
-    
-    shiftOut(ser, clk, MSBFIRST, e[i]);
+    shiftOut(ser, clk, MSBFIRST, a[i]);
     digitalWrite(rows[i], LOW);
     delay(2);
     digitalWrite(rows[i], HIGH);
+    clear_display(70);
   }
 
 }
 
 // Clear the display
-void clear_display()
+void clear_display(int i)
 {
   // Shift 75 0s onto the register to clear it, doing 
   // it this way because even in decimal, that's a big number
-  for (int clear = 0; clear <= 15; clear++) {
-    shiftOut(ser, clk, MSBFIRST, 00000);
+  for (int clear = 0; clear <= i; clear++) {
+    shiftOut(ser, clk, MSBFIRST, 0b0);
   }
 }
 
