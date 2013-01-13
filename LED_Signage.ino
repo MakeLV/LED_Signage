@@ -26,7 +26,7 @@ void setup() {
   // setup the row pins, make sure they're off
   for (int row = 0; row < rowCount; row++)  {
     pinMode(rows[row], OUTPUT);
-    digitalWrite(rows[row], LOW);
+    digitalWrite(rows[row], HIGH);
   }
 
   clear_display(columnCount);
@@ -54,9 +54,9 @@ void count_binary(int n)
 
     // show this on each row once before moving on
     for (int row = 0; row < rowCount; row++) {
-      digitalWrite(rows[row], HIGH);
-      delay(100);
       digitalWrite(rows[row], LOW);
+      delay(100);
+      digitalWrite(rows[row], HIGH);
     }
   }
 }
@@ -70,9 +70,9 @@ void print_letter() //(char c)
   {
 //    write_data(pgm_read_byte(&font[(int)c][i]));
     shiftOut(ser, clk, MSBFIRST, a[i]);
-    digitalWrite(rows[i], HIGH);
-    delay(2);
     digitalWrite(rows[i], LOW);
+    delay(2);
+    digitalWrite(rows[i], HIGH);
     clear_display(70);
   }
 
